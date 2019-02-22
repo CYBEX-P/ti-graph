@@ -3,6 +3,8 @@ from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMix
 from flask import jsonify
 from tiweb import app
 
+from exportDB import export, processExport
+
 @app.route('/secure')
 @login_required
 def home():
@@ -12,3 +14,7 @@ def home():
 def api():
     foo = {"bar":'test'}
     return jsonify(foo)
+
+@app.route('/neo4j/export')
+def exportNeoDB():
+        return jsonify(processExport(export()))
