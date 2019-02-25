@@ -12,13 +12,7 @@ def processExport(dataObject):
         
 def export():
 
-    # load neo4j conf 
-    conf = open(os.path.expanduser("~/.creds"))
-    info = conf.read()
-    conf.close()
-    info = json.loads(info)
-
-    graph = Graph("bolt://cybexp2.acs.unr.edu:7687", auth = (info['username'], info['password']))
+    graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
     r_response = graph.run("MATCH (a)-[r]->(b) \
         WITH collect( \

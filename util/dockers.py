@@ -64,7 +64,7 @@ def create_db(client):
 
 if __name__== "__main__":
     client = docker.from_env()
-#    killall(client)
+    #killall(client)
     stats = create_db(client)
     print(stats)
     print(json.dumps(list_db(client),indent=4,sort_keys=True))
