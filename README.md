@@ -51,4 +51,7 @@ All static content will need to go under tiweb\static
 5. `python3 runserver.py`
 6. The Neo4j GUI is located at localhost on the HTTP port specified by the output of `dockers.py`
 
+### Bonus
+Run `sudo systemctl <status/stop/restart/start> docker` to view the status of the docker service 
+
 
