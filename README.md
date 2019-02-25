@@ -53,5 +53,6 @@ All static content will need to go under tiweb\static
 
 ### Bonus
 Run `sudo systemctl <status/stop/restart/start> docker` to view the status of the docker service 
+Run `sudo docker container ls` tells you the ports for Bolt and HTTP
 
 
