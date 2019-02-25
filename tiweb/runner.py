@@ -8,14 +8,14 @@ import os
 from parser import pull_ip_src
 from gip import geoip, ASN
 
-def full_load():
+def full_load(graph):
         # # load neo4j conf 
         # conf = open(os.path.expanduser("~/.creds"))
         # info = conf.read()
         # conf.close()
         # info = json.loads(info)
 
-        graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+        #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
         ip_nodes = pull_ip_src()
 
@@ -106,9 +106,9 @@ def full_load():
 
         return 1
 
-def insertNode(nodeType, data):
+def insertNode(nodeType, data, graph):
 
-        graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+        #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
         if nodeType == "IP":
                 tx = graph.begin()
@@ -119,9 +119,9 @@ def insertNode(nodeType, data):
         else:
                 return 0
 
-def insertHostname(node):
+def insertHostname(node, graph):
 
-        graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+        #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
         try:
                 host = socket.gethostbyaddr(node)

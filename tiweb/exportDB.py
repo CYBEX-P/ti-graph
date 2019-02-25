@@ -10,9 +10,9 @@ def processExport(dataObject):
 
     return dataObject
         
-def export():
+def export(graph):
 
-    graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+    #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
     r_response = graph.run("MATCH (a)-[r]->(b) \
         WITH collect( \

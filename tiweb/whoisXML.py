@@ -22,9 +22,9 @@ def whois(data):
     return jsonResponse
 
 
-def insertWhois(data):
+def insertWhois(data, graph):
 
-    graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+    #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
     if(data != 0):
             c = Node("Whois", data = data["WhoisRecord"]['registrant']['organization'])

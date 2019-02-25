@@ -23,9 +23,9 @@ def geoip(ip):
         reader.close()
         return 0
 
-def geoip_insert(data):
+def geoip_insert(data, graph):
 
-        graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+        #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
         if(data != 0):
                 c = Node("Country", country = data["country"])
@@ -62,9 +62,9 @@ def ASN(ip):
         except:
             return 0
 
-def asn_insert(data):
+def asn_insert(data, graph):
 
-        graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+        #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
 
         if(data != 0):
                 a = Node("ASN", asn = data["ASN"])

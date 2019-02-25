@@ -9,6 +9,8 @@ from runner import full_load, insertNode, insertHostname
 from whoisXML import whois, insertWhois
 from exportDB import export, processExport
 
+from connect import graph
+
 @app.route('/secure')
 @login_required
 def home():
@@ -21,7 +23,7 @@ def api():
 
 @app.route('/neo4j/export')
 def exportNeoDB():
-        return jsonify(processExport(export()))
+        return jsonify(processExport(export(graph)))
 
 @app.route('/neo4j/load')
 def load_function():
@@ -30,12 +32,12 @@ def load_function():
 
 @app.route('/neo4j/wipe')
 def wipe_function():
-    wipeDB()
+    wipeDB(graph)
     return "Neo4j DB full wipe complete!"
 
 @app.route('/neo4j/insert/<Ntype>/<data>')
 def insert(Ntype, data):
-    status = insertNode(Ntype, data)
+    status = insertNode(Ntype, data, graph)
     if status == 1:
         return "Success"
     else:
@@ -45,21 +47,21 @@ def insert(Ntype, data):
 def enrich(enrich_type, ip):
     if(enrich_type == "asn"):
             a_results = ASN(ip)
-            status = asn_insert(a_results)
+            status = asn_insert(a_results, graph)
             return str({"ASN insert status" : status})
 
     elif enrich_type == "gip":
             g_results = geoip(ip)
-            status = geoip_insert(g_results)
+            status = geoip_insert(g_results, graph)
             return str({"GIP insert status" : status})
 
     elif enrich_type == "hostname":
-            status = insertHostname(ip)
+            status = insertHostname(ip, graph)
             return str({"Hostname insert status" : status})
     
     elif enrich_type == "whois":
             w_results = whois(ip)
-            status = insertWhois(w_results)
+            status = insertWhois(w_results, graph)
             return str({"Whois insert status" : status})
             
                 
