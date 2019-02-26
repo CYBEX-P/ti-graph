@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+    ></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.js"
+    ></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <style type="text/css">
+      #mynetwork {
+        width: 800px;
+        height: 800px;
+        border: 1px solid rgb(134, 29, 29);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="testdiv"></div>
+    <div id="mynetwork"></div>
+    <script type="text/javascript">
+      function redrawTL() {
+        $.ajax({
+          type: "POST",
+          url: "http:/127.0.0.1/neo4j/export",
+          type: jsonp,
+          data: {},
+          success: function(data) {
+            var result = JSON.parse(JSON.parse(JSON.stringify(data)));
+            data.clear();
+            data.add(result);
+            network.fit();
+          }
+        });
+      }
+      //function redraw(data) {
+      //console.log(data);
+      //t1 = new vis.Network(container, items, options);
+      //}
+    </script>
+  </body>
+</html>
