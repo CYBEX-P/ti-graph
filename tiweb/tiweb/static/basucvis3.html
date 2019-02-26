@@ -54,15 +54,15 @@
         var edges = [];
         for (i = 0; i < data1.length; i++) {
           edges.push({
-            from: data1[i].id,
-            to: data1[i].parentid,
-            type: data1[i].edgeValue
+            from: data1[i].from,
+            to: data1[i].to,
+            type: data1[i].type
           }); // with labels
 
           var nodeItem = {
             id: data1[i].id,
             label: data1[i].label,
-            title: data1[i].IP
+            value: data1[i].IP
           };
           nodes.push(nodeItem); // create node
         }
