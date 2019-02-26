@@ -28,9 +28,8 @@
     <div id="testdiv"></div>
     <div id="mynetwork"></div>
     <script type="text/javascript">
-      // function loadXMLDoc() {
       var xhttp = new XMLHttpRequest();
-      //var xhttp = new ActiveXObject("MSXML2.XMLHTTP");
+
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           //var data1 = this.responseText;
@@ -39,7 +38,7 @@
           document.getElementById("testdiv").innerHTML =
             "<h1>Data Export Successful</h1>";
         }
-        //};
+
         xhttp.open("GET", "http://127.0.0.1:5000/neo4j/export", true);
         xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
         xttp.setRequestHeader(
@@ -50,12 +49,32 @@
         //loadXMLDoc();
 
         xhttp.send();
-      };
 
-      var data = {};
-      var options = {};
-      var container = document.getElementById("mynetwork");
-      var network = new vis.Network(container, data, options);
+        var nodes = [];
+        var edges = [];
+        for (i = 0; i < data1.length; i++) {
+          edges.push({
+            from: data1[i].id,
+            to: data1[i].parentid,
+            type: data1[i].edgeValue
+          }); // with labels
+
+          var nodeItem = {
+            id: data1[i].id,
+            label: data1[i].label,
+            title: data1[i].IP
+          };
+          nodes.push(nodeItem); // create node
+        }
+
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+        var options = {};
+        var container = document.getElementById("mynetwork");
+        var network = new vis.Network(container, data, options);
+      };
     </script>
   </body>
 </html>
