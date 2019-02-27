@@ -17,9 +17,20 @@
 
     <style type="text/css">
       #mynetwork {
-        width: 800px;
+        position: absolute;
+        width: 50%;
         height: 800px;
         border: 1px solid rgb(134, 29, 29);
+        left: 25%;
+
+      }
+      #testdiv {
+          padding : 10px;
+          margin : 10px;
+          border: 2px solid black;
+          display: flex;
+          align-items: center;
+          justify-content: center;
       }
     </style>
 
@@ -29,7 +40,15 @@
 
   <body>
     <div id="testdiv">
-        <button type="button", id="exportButton">ExportDB</button>
+        <div id='fakeForm'>
+            <button type="button", id="insertButton">Insert IP</button> : <input type = "text" id = "ip"><br><br>
+            <button type="button", id="enrichASNButton">Enrich ASN</button> : <input type = "text" id = "ip1"><br><br>
+            <button type="button", id="enrichGIPButton">Enrich GeoIP</button> : <input type = "text" id = "ip2"><br><br>
+            <button type="button", id="enrichWhoisButton">Enrich Whois</button> : <input type = "text" id = "ip3"><br><br>
+            <button type="button", id="enrichHostnameButton">Enrich Hostname</button> : <input type = "text" id = "ip4"><br><br>
+            <button type="button", id="exportButton">Update Graph</button>
+            <button type="button", id="wipeButton">Delete Graph DB</button>
+        </div>
     </div>
     <div id="mynetwork"></div>
 
@@ -39,6 +58,5 @@
 <script>
 $("#exportButton").click(function() {
     exportDB();
-//    alert("Button was clicked");
 });
     </script>
