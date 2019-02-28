@@ -79,4 +79,14 @@ $("#enrichGIPButton").click(function() {
     GIP(ip);
 });
 
+$("#enrichWhoisButton").click(function() {
+    var ip = $("#ip3").val();
+    whois(ip);
+});
+
+$("#enrichHostnameButton").click(function() {
+    var ip = $("#ip4").val();
+    host(ip);
+});
+
 </script>
