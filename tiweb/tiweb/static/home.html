@@ -60,8 +60,23 @@ $("#exportButton").click(function() {
     exportDB();
 });
 
+$("#wipeButton").click(function() {
+    wipeDB();
+});
+
 $("#insertButton").click(function() {
     var ip = $("#ip").val();
     insertIP(ip);
 });
-    </script>
+
+$("#enrichASNButton").click(function() {
+    var ip = $("#ip1").val();
+    ASN(ip);
+});
+
+$("#enrichGIPButton").click(function() {
+    var ip = $("#ip2").val();
+    GIP(ip);
+});
+
+</script>

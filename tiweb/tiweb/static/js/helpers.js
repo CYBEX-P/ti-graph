@@ -9,7 +9,7 @@ exportDB = function(){
         }
     }
     xhttp.open("GET", "http://localhost:5000/neo4j/export", true);
-    xhttp.setRequestHeader("Access-Control-Allow-Origin");
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", '*');
     xhttp.send();
 }
 
@@ -31,11 +31,11 @@ wipeDB = function(){
         if (this.readyState == 4 && this.status == 200) {
         
             var data = JSON.parse(xhttp.responseText);
-            //exportDB()
+            exportDB();
         }
     }
     xhttp.open("GET", "http://localhost:5000/neo4j/wipe", true);
-    xhttp.setRequestHeader("Access-Control-Allow-Origin");
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", '*');
     xhttp.send();
 }
 
@@ -45,10 +45,38 @@ insertIP = function(IP) {
         if (this.readyState == 4 && this.status == 200) {
         
             var data = JSON.parse(xhttp.responseText);
-            //exportDB()
+            exportDB();
         }
     }
     xhttp.open("GET", `http://localhost:5000/neo4j/insert/IP/${IP}`, true);
-    xhttp.setRequestHeader("Access-Control-Allow-Origin");
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", '*');
+    xhttp.send();
+}
+
+ASN = function(IP){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        
+            var data = JSON.parse(xhttp.responseText);
+            exportDB();
+        }
+    }
+    xhttp.open("GET", `http://localhost:5000/enrich/asn/${IP}`, true);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", '*');
+    xhttp.send();
+}
+
+GIP = function(IP){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        
+            var data = JSON.parse(xhttp.responseText);
+            exportDB();
+        }
+    }
+    xhttp.open("GET", `http://localhost:5000/enrich/gip/${IP}`, true);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin", '*');
     xhttp.send();
 }
