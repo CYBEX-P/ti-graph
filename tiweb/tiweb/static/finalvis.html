@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF8" />
+    <title>Network</title>
+
+    <script
+      type="text/javascript"
+      src="/home/ankitah/Desktop/IOC-env/node_modules/vis/dist/vis.js"
+    ></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/home/ankitah/Desktop/IOC-env/node_modules/vis/dist/vis.css"
+    />
+
+    <script src="/home/ankitah/code/ti-graph/tiweb/tiweb/static/export.js"></script>
+
+    <style type="text/css">
+      #mynetwork {
+        width: 800px;
+        height: 800px;
+        border: 1px solid lightgray;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+      var network;
+
+      // create a network
+      var container = document.getElementById("mynetwork");
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {
+        nodes: {
+          shape: "dot",
+          scaling: {
+            min: 10,
+            max: 30
+          },
+          font: {
+            size: 12,
+            face: "Tahoma"
+          }
+        },
+        edges: {
+          width: 0.15,
+          color: { inherit: "from" },
+          smooth: {
+            type: "continuous"
+          }
+        },
+        physics: {
+          stabilization: false,
+          barnesHut: {
+            gravitationalConstant: -80000,
+            springConstant: 0.001,
+            springLength: 200
+          }
+        },
+        interaction: {
+          tooltipDelay: 200,
+          hideEdgesOnDrag: true
+        }
+      };
+
+      network = new vis.Network(container, data, options);
+    </script>
+  </body>
+</html>
