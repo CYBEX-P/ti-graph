@@ -9,6 +9,7 @@ exportDB = function(){
         }
     }
     xhttp.open("GET", "http://localhost:5000/neo4j/export", true);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin");
     xhttp.send();
 }
 
@@ -34,13 +35,20 @@ wipeDB = function(){
         }
     }
     xhttp.open("GET", "http://localhost:5000/neo4j/wipe", true);
-    xhttp.setRequestHeader("Access-Control-Allow-Headers");
+    xhttp.setRequestHeader("Access-Control-Allow-Origin");
     xhttp.send();
 }
 
 insertIP = function(IP) {
-    fetch(`http://localhost:5000/neo4j/insert/IP/${IP}`)
-    .then(function(response) {
-      console.log(response.json());
-    });
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        
+            var data = JSON.parse(xhttp.responseText);
+            //exportDB()
+        }
+    }
+    xhttp.open("GET", `http://localhost:5000/neo4j/insert/IP/${IP}`, true);
+    xhttp.setRequestHeader("Access-Control-Allow-Origin");
+    xhttp.send();
 }
