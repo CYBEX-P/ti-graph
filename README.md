@@ -43,6 +43,14 @@ To Add additional files with routes
 
 All static content will need to go under tiweb\static
 
+## Building the React Frontend
+- Go to the [front-end](https://github.com/CYBEX-P/ti-graph-frontend)
+    - Run through the steps to install
+- `npm run build`
+    - In the frontend repository there will now be a folder called build.
+    - Copy all of the folders from `build/static` into `tiweb/static`
+    - Copy all of the other files from `build` into `tiweb/static`
+
 ## Usage
 1. `sudo python3 dockers.py` (in utils)
 2. Enter venv
