@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='react_build/static', template_folder='react_build')
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'notsosecret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tiweb.db'
