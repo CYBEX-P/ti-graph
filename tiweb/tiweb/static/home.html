@@ -59,4 +59,34 @@
 $("#exportButton").click(function() {
     exportDB();
 });
-    </script>
+
+$("#wipeButton").click(function() {
+    wipeDB();
+});
+
+$("#insertButton").click(function() {
+    var ip = $("#ip").val();
+    insertIP(ip);
+});
+
+$("#enrichASNButton").click(function() {
+    var ip = $("#ip1").val();
+    ASN(ip);
+});
+
+$("#enrichGIPButton").click(function() {
+    var ip = $("#ip2").val();
+    GIP(ip);
+});
+
+$("#enrichWhoisButton").click(function() {
+    var ip = $("#ip3").val();
+    whois(ip);
+});
+
+$("#enrichHostnameButton").click(function() {
+    var ip = $("#ip4").val();
+    host(ip);
+});
+
+</script>
