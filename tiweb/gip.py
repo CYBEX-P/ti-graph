@@ -25,12 +25,12 @@ def geoip(ip):
         reader.close()
         return 0
 
-
 def geoip_insert(data, graph):
-    if (data != 0):
-        c = Node("Country", country=data["country"])
-        ip_node = graph.nodes.match("IP", IP=data["ip_src"]).first()
-        c_node = graph.nodes.match("Country", country=data["country"]).first()
+
+        if(data != 0):
+                c = Node("Country", country = data["country"])
+                ip_node = graph.nodes.match("IP", IP=data["ip_src"]).first()
+                c_node = graph.nodes.match("Country", country = data["country"]).first()
 
         if (c_node):
             rel = Relationship(ip_node, "IS_LOCATED_IN", c_node)
@@ -60,12 +60,12 @@ def ASN(ip):
         except Exception:
             return 0
 
-
 def asn_insert(data, graph):
-    if (data != 0):
-        a = Node("ASN", asn=data["ASN"])
-        ip_node = graph.nodes.match("IP", IP=data["ip_src"]).first()
-        a_node = graph.nodes.match("ASN", asn=data["ASN"]).first()
+
+        if(data != 0):
+                a = Node("ASN", asn = data["ASN"])
+                ip_node = graph.nodes.match("IP", IP=data["ip_src"]).first()
+                a_node = graph.nodes.match("ASN", asn = data["ASN"]).first()
 
         if (a_node):
             rel = Relationship(ip_node, "HAS_ASN", a_node)
