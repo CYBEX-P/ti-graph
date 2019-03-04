@@ -33,36 +33,36 @@ def load_function():
 @app.route('/neo4j/wipe')
 def wipe_function():
     wipeDB(graph)
-    return "Neo4j DB full wipe complete!"
+    return jsonify({"Status":"Neo4j DB full wipe complete!"})
 
 @app.route('/neo4j/insert/<Ntype>/<data>')
 def insert(Ntype, data):
     status = insertNode(Ntype, data, graph)
     if status == 1:
-        return "Success"
+        return jsonify({"Status" : "Success"})
     else:
-        return "Failed"
+        return jsonify({"Status" : "Failed"})
 
 @app.route('/enrich/<enrich_type>/<ip>')
 def enrich(enrich_type, ip):
     if(enrich_type == "asn"):
             a_results = ASN(ip)
             status = asn_insert(a_results, graph)
-            return str({"ASN insert status" : status})
+            return jsonify({"ASN insert status" : status})
 
     elif enrich_type == "gip":
             g_results = geoip(ip)
             status = geoip_insert(g_results, graph)
-            return str({"GIP insert status" : status})
+            return jsonify({"GIP insert status" : status})
 
     elif enrich_type == "hostname":
             status = insertHostname(ip, graph)
-            return str({"Hostname insert status" : status})
+            return jsonify({"Hostname insert status" : status})
     
     elif enrich_type == "whois":
             w_results = whois(ip)
             status = insertWhois(w_results, graph)
-            return str({"Whois insert status" : status})
+            return jsonify({"Whois insert status" : status})
             
                 
     else:

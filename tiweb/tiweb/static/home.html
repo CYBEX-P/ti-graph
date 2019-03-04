@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+    ></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.js"
+    ></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <style type="text/css">
+      #mynetwork {
+        position: absolute;
+        width: 50%;
+        height: 800px;
+        border: 1px solid rgb(134, 29, 29);
+        left: 25%;
+
+      }
+      #testdiv {
+          padding : 10px;
+          margin : 10px;
+          border: 2px solid black;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+    </style>
+
+    <script type="text/javascript" src="/static/js/helpers.js"></script>
+
+  </head>
+
+  <body>
+    <div id="testdiv">
+        <div id='fakeForm'>
+            <button type="button", id="insertButton">Insert IP</button> : <input type = "text" id = "ip"><br><br>
+            <button type="button", id="enrichASNButton">Enrich ASN</button> : <input type = "text" id = "ip1"><br><br>
+            <button type="button", id="enrichGIPButton">Enrich GeoIP</button> : <input type = "text" id = "ip2"><br><br>
+            <button type="button", id="enrichWhoisButton">Enrich Whois</button> : <input type = "text" id = "ip3"><br><br>
+            <button type="button", id="enrichHostnameButton">Enrich Hostname</button> : <input type = "text" id = "ip4"><br><br>
+            <button type="button", id="exportButton">Update Graph</button>
+            <button type="button", id="wipeButton">Delete Graph DB</button>
+        </div>
+    </div>
+    <div id="mynetwork"></div>
+
+  </body>
+</html>
+
+<script>
+$("#exportButton").click(function() {
+    exportDB();
+});
+
+$("#wipeButton").click(function() {
+    wipeDB();
+});
+
+$("#insertButton").click(function() {
+    var ip = $("#ip").val();
+    insertIP(ip);
+});
+
+$("#enrichASNButton").click(function() {
+    var ip = $("#ip1").val();
+    ASN(ip);
+});
+
+$("#enrichGIPButton").click(function() {
+    var ip = $("#ip2").val();
+    GIP(ip);
+});
+
+$("#enrichWhoisButton").click(function() {
+    var ip = $("#ip3").val();
+    whois(ip);
+});
+
+$("#enrichHostnameButton").click(function() {
+    var ip = $("#ip4").val();
+    host(ip);
+});
+
+</script>

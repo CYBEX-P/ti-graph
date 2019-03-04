@@ -12,7 +12,8 @@ def processExport(dataObject):
         
 def export(graph):
 
-    #graph = Graph("bolt://127.0.0.1:43311", auth = ('neo4j', "EiWF2bD1Mnb1u1P"))
+    #Added limit of 10 nodes and edges just for testing on full cybexp2 graph -- jeffs 
+    # "collect(blah blah blah)[..10] AS edges..."
 
     r_response = graph.run("MATCH (a)-[r]->(b) \
         WITH collect( \
@@ -25,7 +26,11 @@ def export(graph):
         RETURN edges").data()
 
     n_response = graph.run("MATCH (a) WITH collect( \
-        {id: id(a), label: labels(a), properties: properties(a)}) \
-            AS nodes RETURN nodes").data()
+            { \
+                    id: id(a), \
+                    label: labels(a), \
+                    properties: properties(a) \
+            } \
+        ) AS nodes RETURN nodes").data()
 
     return {"Neo4j" : [n_response, r_response]}
