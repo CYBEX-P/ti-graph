@@ -3,7 +3,7 @@ from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMix
 from flask import jsonify
 from tiweb import app
 
-from gip import geoip,ASN,geoip_insert, asn_insert
+from gip import geoip, ASN, geoip_insert, asn_insert
 from wipe_db import wipeDB
 from runner import full_load, insertNode, insertHostname
 from whoisXML import whois, insertWhois
@@ -11,29 +11,35 @@ from exportDB import export, processExport
 
 from connect import graph
 
+
 @app.route('/secure')
 @login_required
 def home():
     return app.send_static_file('secure.html')
 
+
 @app.route('/api')
 def api():
-    foo = {"bar":'test'}
+    foo = {"bar": 'test'}
     return jsonify(foo)
+
 
 @app.route('/neo4j/export')
 def exportNeoDB():
-        return jsonify(processExport(export(graph)))
+    return jsonify(processExport(export(graph)))
+
 
 @app.route('/neo4j/load')
 def load_function():
     full_load()
     return "Neo4j DB loaded!"
 
+
 @app.route('/neo4j/wipe')
 def wipe_function():
     wipeDB(graph)
     return jsonify({"Status":"Neo4j DB full wipe complete!"})
+
 
 @app.route('/neo4j/insert/<Ntype>/<data>')
 def insert(Ntype, data):
@@ -42,6 +48,7 @@ def insert(Ntype, data):
         return jsonify({"Status" : "Success"})
     else:
         return jsonify({"Status" : "Failed"})
+
 
 @app.route('/enrich/<enrich_type>/<ip>')
 def enrich(enrich_type, ip):
@@ -66,4 +73,4 @@ def enrich(enrich_type, ip):
             
                 
     else:
-            return "Invalid enrichment type. Try 'asn', 'gip', or 'hostname'."
+        return "Invalid enrichment type. Try 'asn', 'gip', or 'hostname'."

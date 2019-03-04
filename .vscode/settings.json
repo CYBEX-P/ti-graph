@@ -1,0 +1,8 @@
+{
+  "python.linting.enabled": true,
+  "python.pythonPath": "venv/bin/python",
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["--config=.flake8rc"],
+  "editor.formatOnSave": false,
+  "python.formatting.provider": "yapf"
+}

@@ -14,5 +14,4 @@ build/
 *.egg-info/
 
 .vscode/
-
-/tiweb/data/*
+tiweb/data/*
