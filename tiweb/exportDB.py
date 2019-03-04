@@ -2,6 +2,7 @@ from py2neo import Graph, Node, Relationship
 import os
 import json
 
+
 def processExport(dataObject):
 
     for x in dataObject["Neo4j"][0]:
@@ -9,12 +10,11 @@ def processExport(dataObject):
             key['label'] = key['label'][0]
 
     return dataObject
-        
-def export(graph):
 
     #Added limit of 10 nodes and edges just for testing on full cybexp2 graph -- jeffs 
     # "collect(blah blah blah)[..10] AS edges..."
 
+def export(graph):
     r_response = graph.run("MATCH (a)-[r]->(b) \
         WITH collect( \
             { \
@@ -33,4 +33,4 @@ def export(graph):
             } \
         ) AS nodes RETURN nodes").data()
 
-    return {"Neo4j" : [n_response, r_response]}
+    return {"Neo4j": [n_response, r_response]}
