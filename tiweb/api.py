@@ -1,8 +1,10 @@
 from flask import Flask, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 from flask import jsonify
-from tiweb import app
+from py2neo import Graph, Node
+import requests
 
+from tiweb import app
 from gip import geoip, ASN, geoip_insert, asn_insert
 from wipe_db import wipeDB
 from runner import full_load, insertNode, insertHostname
@@ -74,3 +76,23 @@ def enrich(enrich_type, ip):
                 
     else:
         return "Invalid enrichment type. Try 'asn', 'gip', or 'hostname'."
+
+
+@app.route('/enrich/all')
+def enrich_all():
+    for node in graph.nodes.match("IP"):
+        enrich('asn', node['IP'])
+        enrich('gip', node['IP'])
+        enrich('whois', node['IP'])
+        enrich('hostname', node['IP'])
+    return jsonify({"Status" : "Success"})
+
+@app.route('/details/<id>')
+def show_details(id):
+    node = graph.nodes.get(int(id))
+    return jsonify(node)
+
+@app.route('/admin/ratelimit')
+def ratelimit():
+    res = requests.get('https://user.whoisxmlapi.com/service/account-balance?apiKey=at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz')
+    return jsonify(res.json())
