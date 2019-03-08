@@ -45,7 +45,6 @@ All static content will need to go under tiweb\static
 
 ## Building the React Frontend
 - Go to the [front-end](https://github.com/CYBEX-P/ti-graph-frontend)
-    - Run through the steps to install
 - `npm install`
 - `npm start`
 
