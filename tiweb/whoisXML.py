@@ -1,6 +1,7 @@
 import os
 import json
 from py2neo import Graph, Node, Relationship
+import yaml
 
 
 def whois(data):
@@ -9,9 +10,12 @@ def whois(data):
         from urllib.request import urlopen
     except ImportError:
         from urllib2 import urlopen
+        
+    with open('../config.yaml','r') as f:
+        conf = yaml.load(f)
 
     domainName = data
-    apiKey = 'at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz'
+    apiKey = conf['whoisData']['apikey']
 
     url = 'https://www.whoisxmlapi.com/whoisserver/WhoisService?'\
         + 'domainName=' + domainName + '&apiKey=' + apiKey + "&outputFormat=JSON"
