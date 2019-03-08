@@ -1,0 +1,67 @@
+{
+	"apiVersion": "apps/v1beta1",
+	"kind": "Deployment",
+	"metadata": {
+		"name": "__APP_NAME__",
+		"namespace": "neo4j",
+		"labels": {
+			"app": "__APP_NAME__"
+		}
+	},
+	"spec": {
+		"replicas": 1,
+		"strategy": {
+			"rollingUpdate": {
+				"maxSurge": 1,
+				"maxUnavailable": 0
+			},
+			"type": "RollingUpdate"
+		},
+		"template": {
+			"metadata": {
+				"labels": {
+					"app": "__APP_NAME__"
+				}
+			},
+			"spec": {
+				"containers": [
+					{
+						"name": "__APP_NAME__",
+						"image": "neo4j",
+						"imagePullPolicy": "IfNotPresent",
+						"env": [
+							{
+								"name": "NEO4J_AUTH",
+								"value": "neo4j/monkeyfarts"
+							},
+							{
+								"name": "NEO4J_ACCEPT_LICENSE_AGREEMENT",
+								"value": "yes"
+							}
+						],
+						"ports": [
+							{
+								"containerPort": 7474,
+								"name": "browser"
+							},
+							{
+								"containerPort": 7687,
+								"name": "bolt"
+							},
+							{
+								"containerPort": 6000,
+								"name": "tx"
+							}
+						],
+						"securityContext": {
+							"privileged": true
+						}
+					}
+				],
+				"nodeSelector": {
+					"purpose": "worker"
+				}
+			}
+		}
+	}
+}
