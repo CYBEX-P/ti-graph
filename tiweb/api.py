@@ -57,21 +57,21 @@ def enrich(enrich_type, ip):
     if(enrich_type == "asn"):
             a_results = ASN(ip)
             status = asn_insert(a_results, graph)
-            return jsonify({"ASN insert status" : status})
+            return jsonify({"insert status" : status})
 
     elif enrich_type == "gip":
             g_results = geoip(ip)
             status = geoip_insert(g_results, graph)
-            return jsonify({"GIP insert status" : status})
+            return jsonify({"insert status" : status})
 
     elif enrich_type == "hostname":
             status = insertHostname(ip, graph)
-            return jsonify({"Hostname insert status" : status})
+            return jsonify({"insert status" : status})
     
     elif enrich_type == "whois":
             w_results = whois(ip)
             status = insertWhois(w_results, graph)
-            return jsonify({"Whois insert status" : status})
+            return jsonify({"insert status" : status})
             
                 
     else:
