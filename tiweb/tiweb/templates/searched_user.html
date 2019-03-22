@@ -1,0 +1,30 @@
+<html>
+   <body>
+      <table border = 1>
+         <thead>
+            <td>User_id</td>
+            <td>First Name></td>
+            <td>Last Name</td>
+            <td>Email</td>
+            <td>DB IP</td>
+            <td>DB Port</td>
+            <td>DB Username</td>
+            <td>DB Password</td>
+         </thead>
+         
+         {% for row in rows %}
+            <tr>
+               <td>{{row["id"]}}</td>
+               <td>{{row["first_name"]}}</td>
+               <td>{{row["last_name"]}}</td>
+               <td>{{row['email']}}</td>
+               <td>{{row['db_ip']}}</td>	
+               <td>{{row['db_port']}}</td>	
+               <td>{{row['username']}}</td>	
+               <td>{{row['password']}}</td>		
+            </tr>
+         {% endfor %}
+      </table>
+      
+   </body>
+</html>
