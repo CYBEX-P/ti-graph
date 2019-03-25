@@ -1,3 +1,64 @@
 whoisData:
   apikey: at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz
   
+IOC:
+  - types:
+     - Source IP
+     - Destination IP
+     - Source Port
+     - Destination Port
+     - email address
+     - domain name
+     - URL
+     - file hash
+     - BTC
+     - AS
+     - MAC
+     - BGP path 
+     - SSID
+
+  - enrichments:
+    - Source IP:
+      - asn
+      - gip
+      - hostname
+      - whois
+
+    - Destination IP:
+      - asn
+      - gip
+      - hostname
+      - whois
+
+    - Source Port:
+      - na
+
+    - Destination Port:
+      - na
+
+    - email address:
+      - na
+
+    - domain name:
+      - na
+
+    - URL:
+      - na
+
+    - file hash:
+      - na
+
+    - BTC:
+      - na
+
+    - AS:
+      - na
+
+    - MAC:
+      - na
+
+    - BGP path:
+      - na 
+
+    - SSID:
+      - na

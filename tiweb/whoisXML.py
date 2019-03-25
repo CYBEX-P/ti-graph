@@ -29,9 +29,9 @@ def whois(data):
 def insertWhois(data, graph):
 
     if(data != 0):
-            c = Node("Whois", data = data["WhoisRecord"]['registrant']['organization'])
+            c = Node("Whois", data = data["WhoisRecord"]["registryData"]["registrant"]["organization"])
             ip_node = graph.nodes.match("IP", IP=data["WhoisRecord"]["domainName"]).first()
-            c_node = graph.nodes.match("Whois", data = data["WhoisRecord"]['registrant']['organization']).first()
+            c_node = graph.nodes.match("Whois", data["WhoisRecord"]["registryData"]["registrant"]["organization"]).first()
 
             if(c_node):
                     rel = Relationship(ip_node, "HAS_WHOIS", c_node)

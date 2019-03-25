@@ -75,7 +75,7 @@ def enrich(enrich_type, ip):
             
                 
     else:
-        return "Invalid enrichment type. Try 'asn', 'gip', or 'hostname'."
+        return "Invalid enrichment type. Try 'asn', 'gip', 'whois', or 'hostname'."
 
 
 @app.route('/enrich/all')
