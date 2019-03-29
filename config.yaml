@@ -3,63 +3,63 @@ whoisData:
   
   
 IOC:
-  - types:
-     - Source IP
-     - Destination IP
-     - Source Port
-     - Destination Port
-     - email address
-     - domain name
-     - URL
-     - file hash
-     - BTC
-     - AS
-     - MAC
-     - BGP path 
-     - SSID
+  types:
+    - Source IP
+    - Destination IP
+    - Source Port
+    - Destination Port
+    - email address
+    - domain name
+    - URL
+    - file hash
+    - BTC
+    - AS
+    - MAC
+    - BGP path 
+    - SSID
 
-  - enrichments:
-    - Source IP:
+  enrichments:
+    SrcIP:
       - asn
       - gip
       - hostname
       - whois
 
-    - Destination IP:
+    DestIP:
       - asn
       - gip
       - hostname
       - whois
 
-    - Source Port:
+    SourcePort:
       - na
 
-    - Destination Port:
+    DestinationPort:
       - na
 
-    - email address:
+    EmailAddress:
       - na
 
-    - domain name:
+    DomainName:
       - na
 
-    - URL:
+    URL:
       - na
 
-    - file hash:
+    FileHash:
       - na
 
-    - BTC:
+    BTC:
       - na
 
-    - AS:
+    AS:
       - na
 
-    - MAC:
+    MAC:
       - na
 
-    - BGP path:
+    BGPath:
       - na 
 
-    - SSID:
+    SSID:
       - na

@@ -4,7 +4,7 @@ from flask import jsonify
 from py2neo import Graph, Node
 import requests
 
-from tiweb import app
+from tiweb import app, YAMLConfig
 from gip import geoip, ASN, geoip_insert, asn_insert
 from wipe_db import wipeDB
 from runner import full_load, insertNode, insertHostname
@@ -96,3 +96,7 @@ def show_details(id):
 def ratelimit():
     res = requests.get('https://user.whoisxmlapi.com/service/account-balance?apiKey=at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz')
     return jsonify(res.json())
+
+@app.route('/admin/config')
+def sendConfig():
+    return jsonify(YAMLConfig)
