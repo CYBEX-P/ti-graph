@@ -4,18 +4,18 @@ whoisData:
   
 IOC:
   types:
-    - Source IP
-    - Destination IP
-    - Source Port
-    - Destination Port
-    - email address
-    - domain name
+    - SrcIP
+    - DestIP
+    - SourcePort
+    - DestinationPort
+    - EmailAddress
+    - DomainName
     - URL
-    - file hash
+    - FileHash
     - BTC
     - AS
     - MAC
-    - BGP path 
+    - BGPath
     - SSID
 
   enrichments:
@@ -33,33 +33,44 @@ IOC:
 
     SourcePort:
       - na
+      - none
 
     DestinationPort:
       - na
+      - none
 
     EmailAddress:
       - na
+      - none
 
     DomainName:
       - na
+      - none
 
     URL:
       - na
+      - none
 
     FileHash:
       - na
+      - none
 
     BTC:
       - na
+      - none
 
     AS:
       - na
+      - none
 
     MAC:
       - na
+      - none
 
     BGPath:
       - na 
+      - none
 
     SSID:
       - na
+      - none
