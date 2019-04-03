@@ -18,18 +18,21 @@ IOC:
     - BGPath
     - SSID
 
+
   enrichments:
     SrcIP:
       - asn
       - gip
       - hostname
       - whois
+      - cybex
 
     DestIP:
       - asn
       - gip
       - hostname
       - whois
+      - cybex
 
     SourcePort:
       - na
