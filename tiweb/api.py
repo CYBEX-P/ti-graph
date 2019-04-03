@@ -61,7 +61,6 @@ def enrich(enrich_type, ip):
             a_results = ASN(ip)
             status = asn_insert(a_results, graph)
             return jsonify({"insert status" : status})
-            
 
     elif enrich_type == "gip":
             g_results = geoip(ip)
