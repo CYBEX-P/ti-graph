@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
+import yaml
 
 app = Flask(__name__, static_folder='static', template_folder='static')
 app.config['DEBUG'] = True
@@ -58,3 +59,14 @@ def init_db():
     db.create_all()
     #    user_datastore.create_user(email='test@foo.edu', password='password')
     db.session.commit()
+
+
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
+        
+with open('../config.yaml','r') as f:
+    conf = yaml.load(f)
+
+YAMLConfig = conf['IOC']

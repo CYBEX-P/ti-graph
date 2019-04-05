@@ -3,15 +3,18 @@ from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMix
 from flask import jsonify
 from py2neo import Graph, Node
 import requests
+import json
 
-from tiweb import app
+from tiweb import app, YAMLConfig
 from gip import geoip, ASN, geoip_insert, asn_insert
 from wipe_db import wipeDB
 from runner import full_load, insertNode, insertHostname
 from whoisXML import whois, insertWhois
 from exportDB import export, processExport
+from cybex import insertCybex
 
 from connect import graph
+
 
 
 @app.route('/secure')
@@ -72,8 +75,23 @@ def enrich(enrich_type, ip):
             w_results = whois(ip)
             status = insertWhois(w_results, graph)
             return jsonify({"insert status" : status})
-            
-                
+
+    elif enrich_type == "cybex":
+            url = "http://cybexp1.acs.unr.edu:5000/api/v1.0/related/"
+            headers = {'content-type': 'application/json', 'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NTQyNTI2ODcsIm5iZiI6MTU1NDI1MjY4NywianRpIjoiODU5MDFhMGUtNDRjNC00NzEyLWJjNDYtY2FhMzg0OTU0MmVhIiwiaWRlbnRpdHkiOiJpbmZvc2VjIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.-Vb_TgjBkAKBcX_K3Ivq3H2N-sVkpIudJOi2a8mIwtI'}
+            data = { 'ipv4-addr' : ip }
+            data = json.dumps(data)
+
+            r = requests.post(url, headers=headers, data=data)
+            res = json.loads(r.text)
+            try:
+                numOccur = len(res['objects'])
+                status = insertCybex(numOccur, graph, ip)
+                return jsonify({"insert status" : status})
+
+            except:
+                return jsonify({"insert status" : 0})
+                    
     else:
         return "Invalid enrichment type. Try 'asn', 'gip', 'whois', or 'hostname'."
 
@@ -96,3 +114,7 @@ def show_details(id):
 def ratelimit():
     res = requests.get('https://user.whoisxmlapi.com/service/account-balance?apiKey=at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz')
     return jsonify(res.json())
+
+@app.route('/admin/config')
+def sendConfig():
+    return jsonify(YAMLConfig)

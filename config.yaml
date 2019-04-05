@@ -1,64 +1,79 @@
 whoisData:
   apikey: at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz
   
+  
 IOC:
-  - types:
-     - Source IP
-     - Destination IP
-     - Source Port
-     - Destination Port
-     - email address
-     - domain name
-     - URL
-     - file hash
-     - BTC
-     - AS
-     - MAC
-     - BGP path 
-     - SSID
+  types:
+    - SrcIP
+    - DestIP
+    - SourcePort
+    - DestinationPort
+    - EmailAddress
+    - DomainName
+    - URL
+    - FileHash
+    - BTC
+    - AS
+    - MAC
+    - BGPath
+    - SSID
 
-  - enrichments:
-    - Source IP:
+
+  enrichments:
+    SrcIP:
       - asn
       - gip
       - hostname
       - whois
+      - cybex
 
-    - Destination IP:
+    DestIP:
       - asn
       - gip
       - hostname
       - whois
+      - cybex
 
-    - Source Port:
+    SourcePort:
       - na
+      - none
 
-    - Destination Port:
+    DestinationPort:
       - na
+      - none
 
-    - email address:
+    EmailAddress:
       - na
+      - none
 
-    - domain name:
+    DomainName:
       - na
+      - none
 
-    - URL:
+    URL:
       - na
+      - none
 
-    - file hash:
+    FileHash:
       - na
+      - none
 
-    - BTC:
+    BTC:
       - na
+      - none
 
-    - AS:
+    AS:
       - na
+      - none
 
-    - MAC:
+    MAC:
       - na
+      - none
 
-    - BGP path:
+    BGPath:
       - na 
+      - none
 
-    - SSID:
+    SSID:
       - na
+      - none
