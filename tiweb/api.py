@@ -14,12 +14,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import jwt
 import datetime
-import sqlite3 as sql
+
 from flask_jwt_extended import (JWTManager, jwt_required, create_access_token,get_jwt_identity, verify_jwt_in_request)
 from flask_mail import Message, Mail
 import os
-import requests
-import json
 from json import dumps
 from flask_bcrypt import Bcrypt
 from flask_jwt import current_identity
@@ -27,7 +25,7 @@ from flask_cors import CORS
 from werkzeug.datastructures import Headers
 import uuid
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-from flask_jwt_extended import JWTManager
+
 
 from tiweb import app, YAMLConfig
 from gip import geoip, ASN, geoip_insert, asn_insert
@@ -36,10 +34,11 @@ from runner import full_load, insertNode, insertHostname
 from whoisXML import whois, insertWhois
 from exportDB import export, processExport
 from cybex import insertCybex
+#from flask.ext.sqlalchemy import SQLAlchemy
 
 from connect import graph
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///home/ankita/Documents/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://cybexpadmin:O4LZcK9pIMF3x0PFGqeKvdH3krhknwpF@134.197.21.10:3306/cybexpui'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['JWT_SECRET_KEY'] = 'secret'
@@ -60,11 +59,13 @@ class User(UserMixin, db.Model):
     first_name  = db.Column(db.String(15))
     last_name = db.Column(db.String(15))
     email = db.Column(db.String(50), unique = True)
-    db_ip = db.Column(db.Integer)
+    db_ip = db.Column(db.String(16))
     db_port = db.Column(db.Integer)
     username = db.Column(db.String(15), unique = True)
     password = db.Column(db.String(80))
     admin = db.Column(db.Boolean)
+
+#db.create_all()
 
 class RegistrationForm(FlaskForm):
     first_name = StringField('first_name', validators = [InputRequired()])
