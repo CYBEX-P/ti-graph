@@ -1,0 +1,3 @@
+[submodule "ti-graph-frontend"]
+	path = ti-graph-frontend
+	url = https://github.com/CYBEX-P/ti-graph-frontend.git
