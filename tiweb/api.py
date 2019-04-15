@@ -101,7 +101,7 @@ def register():
 	}
     return jsonify({'result' : result})
 
-@app.route('/login', methods =['GET','POST'])
+@app.route('/users/login', methods =['GET','POST'])
 def login():
     form = LoginForm()
     result = ''
