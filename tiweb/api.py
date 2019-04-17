@@ -1,9 +1,10 @@
 from flask import Flask, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
-from flask import jsonify
+from flask import jsonify, request
 from py2neo import Graph, Node
 import requests
 import json
+import os
 
 from tiweb import app, YAMLConfig
 from gip import geoip, ASN, geoip_insert, asn_insert
@@ -112,6 +113,7 @@ def show_details(id):
 
 @app.route('/admin/ratelimit')
 def ratelimit():
+    # needs to use YAMLConfig
     res = requests.get('https://user.whoisxmlapi.com/service/account-balance?apiKey=at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz')
     return jsonify(res.json())
 
@@ -121,4 +123,20 @@ def sendConfig():
 
 @app.route('/event/start', methods=['POST'])
 def startEvent():
-    return jsonify("You hit the event start endpoint")
+    os.environ['eventName'] = request.form['eventName']
+    # insert all nodes
+    # return status 
+    return jsonify(request.form)
+
+@app.route('/event/getName', methods=['GET'])
+def getEventName():
+    return jsonify(os.environ['eventName'])
+
+@app.route('/event/start/file', methods=['POST'])
+def startFileEvent():
+    os.environ['eventName'] = request.form['eventName']
+    # load csv/json file from request.files['fileNameHere]
+    # parse all node types and data
+    # insert all nodes
+    # return status
+    return jsonify(request.form)
