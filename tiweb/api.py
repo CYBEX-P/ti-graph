@@ -118,3 +118,7 @@ def ratelimit():
 @app.route('/admin/config')
 def sendConfig():
     return jsonify(YAMLConfig)
+
+@app.route('/event/start', methods=['POST'])
+def startEvent():
+    return jsonify("You hit the event start endpoint")
