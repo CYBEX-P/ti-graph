@@ -123,10 +123,12 @@ def sendConfig():
 
 @app.route('/event/start', methods=['POST'])
 def startEvent():
-    os.environ['eventName'] = request.form['eventName']
+    res = request.get_json()
+    os.environ['eventName'] = res['eventName']
     # insert all nodes
-    # return status 
-    return jsonify(request.form)
+    # return status
+    
+    return "1"
 
 @app.route('/event/getName', methods=['GET'])
 def getEventName():
