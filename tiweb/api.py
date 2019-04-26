@@ -17,7 +17,6 @@ from cybex import insertCybex
 from connect import graph
 
 
-
 @app.route('/secure')
 @login_required
 def home():
@@ -126,9 +125,10 @@ def startEvent():
     res = request.get_json()
     os.environ['eventName'] = res['eventName']
     # insert all nodes
+    dType = res['IOCType']
+    status = insert("IP", res['dataToInsert'])
     # return status
-    
-    return "1"
+    return status
 
 @app.route('/event/getName', methods=['GET'])
 def getEventName():
