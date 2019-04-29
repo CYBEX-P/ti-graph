@@ -125,8 +125,12 @@ def startEvent():
     res = request.get_json()
     os.environ['eventName'] = res['eventName']
     # insert all nodes
-    dType = res['IOCType']
-    status = insert("IP", res['dataToInsert'])
+    dType1 = res['IOCType1']
+    dType2 = res['IOCType2']
+    dType3 = res['IOCType3']
+    status = insert("IP", res['dataToInsert1'])
+    status2 = insert("IP", res['dataToInsert2'])
+    status2 = insert("IP", res['dataToInsert3'])
     # return status
     return status
 
