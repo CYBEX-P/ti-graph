@@ -128,9 +128,9 @@ def startEvent():
     dType1 = res['IOCType1']
     dType2 = res['IOCType2']
     dType3 = res['IOCType3']
-    status = insert("IP", res['dataToInsert1'])
-    status2 = insert("IP", res['dataToInsert2'])
-    status2 = insert("IP", res['dataToInsert3'])
+    status = insert(dType1, res['dataToInsert1'])
+    status2 = insert(dType2, res['dataToInsert2'])
+    status2 = insert(dType3, res['dataToInsert3'])
     # return status
     return status
 

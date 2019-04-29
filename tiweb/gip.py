@@ -41,7 +41,7 @@ def geoip_insert(data, graph):
                         print("New country node created and linked")
                 return 1
         else:
-                print("No GeoIP Entry for {}".format(data["ip_src"]))
+                print("No GeoIP Entry")
                 return 0
         
 
@@ -78,5 +78,5 @@ def asn_insert(data, graph):
                         print("New asn node created and linked")
                 return 1
         else:
-                print("No asn Entry for {}".format(data["ip_src"]))
+                print("No asn Entry")
                 return 0

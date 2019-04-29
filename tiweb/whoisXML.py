@@ -44,5 +44,5 @@ def insertWhois(data, graph):
                     print("New whois node created and linked")
             return 1
     else:
-            print("No whois Entry for {}".format(data["WhoisRecord"]["domainName"]))
+            print("No whois Entry")
             return 0
