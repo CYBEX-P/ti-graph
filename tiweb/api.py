@@ -99,10 +99,10 @@ def enrich(enrich_type, ip):
 @app.route('/enrich/all')
 def enrich_all():
     for node in graph.nodes.match("IP"):
-        enrich('asn', node['IP'])
-        enrich('gip', node['IP'])
-        enrich('whois', node['IP'])
-        enrich('hostname', node['IP'])
+        enrich('asn', node['data'])
+        enrich('gip', node['data'])
+        enrich('whois', node['data'])
+        enrich('hostname', node['data'])
     return jsonify({"Status" : "Success"})
 
 @app.route('/details/<id>')
@@ -136,9 +136,9 @@ def getEventName():
 
 @app.route('/event/start/file', methods=['POST'])
 def startFileEvent():
-    os.environ['eventName'] = request.form['eventName']
-    # load csv/json file from request.files['fileNameHere]
+    #os.environ['eventName'] = request.form['eventName']
+    #load csv/json file from request.files['fileNameHere]
     # parse all node types and data
     # insert all nodes
     # return status
-    return jsonify(request.form)
+    return jsonify(request.files)

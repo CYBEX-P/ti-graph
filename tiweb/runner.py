@@ -15,7 +15,7 @@ def full_load(graph):
         ## Insert IP Nodes ####################################################
         tx = graph.begin()
         for node in ip_nodes:
-                a = Node("IP", IP=node)
+                a = Node("IP", data=node)
                 tx.create(a)
 
         tx.commit()
@@ -27,9 +27,9 @@ def full_load(graph):
         
                 try:
                         host = socket.gethostbyaddr(node)
-                        a = Node("Hostname", hostname = host[0])
-                        ip_node = graph.nodes.match("IP", IP=node).first()
-                        h_node = graph.nodes.match("Hostname", hostname=host[0]).first()
+                        a = Node("Hostname", data = host[0])
+                        ip_node = graph.nodes.match("IP", data=node).first()
+                        h_node = graph.nodes.match("Hostname", data=host[0]).first()
 
                         if(h_node):
                                 rel = Relationship(ip_node, "IS_RELATED_TO", h_node)
@@ -53,9 +53,9 @@ def full_load(graph):
                 geo_info = geoip(ip)
 
                 if(geo_info != 0):
-                        c = Node("Country", country = geo_info["country"])
-                        ip_node = graph.nodes.match("IP", IP=ip).first()
-                        c_node = graph.nodes.match("Country", country = geo_info["country"]).first()
+                        c = Node("Country", data = geo_info["country"])
+                        ip_node = graph.nodes.match("IP", data=ip).first()
+                        c_node = graph.nodes.match("Country", data = geo_info["country"]).first()
 
                         if(c_node):
                                 rel = Relationship(ip_node, "IS_LOCATED_IN", c_node)
@@ -78,9 +78,9 @@ def full_load(graph):
                 asn_info = ASN(ip)
 
                 if(asn_info != 0):
-                        a = Node("ASN", asn = asn_info["ASN"])
-                        ip_node = graph.nodes.match("IP", IP=ip).first()
-                        a_node = graph.nodes.match("ASN", asn = asn_info["ASN"]).first()
+                        a = Node("ASN", data = asn_info["ASN"])
+                        ip_node = graph.nodes.match("IP", data=ip).first()
+                        a_node = graph.nodes.match("ASN", data = asn_info["ASN"]).first()
 
                         if(a_node):
                                 rel = Relationship(ip_node, "HAS_ASN", a_node)
@@ -101,9 +101,9 @@ def full_load(graph):
 
 def insertNode(nodeType, data, graph):
 
-        if nodeType == "IP":
+        if nodeType:
                 tx = graph.begin()
-                a = Node("IP", IP = data)
+                a = Node(nodeType, data = data)
                 tx.create(a)
                 tx.commit()
                 return 1
@@ -114,9 +114,9 @@ def insertHostname(node, graph):
 
         try:
                 host = socket.gethostbyaddr(node)
-                a = Node("Hostname", hostname = host[0])
-                ip_node = graph.nodes.match("IP", IP=node).first()
-                h_node = graph.nodes.match("Hostname", hostname=host[0]).first()
+                a = Node("Hostname", data = host[0])
+                ip_node = graph.nodes.match("IP", data=node).first()
+                h_node = graph.nodes.match("Hostname", data=host[0]).first()
 
                 if(h_node):
                         rel = Relationship(ip_node, "IS_RELATED_TO", h_node)

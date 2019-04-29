@@ -4,12 +4,11 @@ whoisData:
   
 IOC:
   types:
-    - SrcIP
-    - DestIP
+    - IP
     - SourcePort
     - DestinationPort
     - EmailAddress
-    - DomainName
+    - Hostname
     - URL
     - FileHash
     - BTC
@@ -20,14 +19,7 @@ IOC:
 
 
   enrichments:
-    SrcIP:
-      - asn
-      - gip
-      - hostname
-      - whois
-      - cybex
-
-    DestIP:
+    IP:
       - asn
       - gip
       - hostname
@@ -46,7 +38,7 @@ IOC:
       - na
       - none
 
-    DomainName:
+    Hostname:
       - na
       - none
 
