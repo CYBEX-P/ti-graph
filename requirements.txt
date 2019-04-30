@@ -25,7 +25,6 @@ maxminddb==1.4.1
 neobolt==1.7.4
 neotime==1.7.4
 passlib==1.7.1
-pkg-resources==0.0.0
 prompt-toolkit==2.0.9
 py2neo==4.2.0
 pycparser==2.19
@@ -41,3 +40,4 @@ urllib3==1.24.1
 wcwidth==0.1.7
 Werkzeug==0.14.1
 WTForms==2.2.1
+pandas

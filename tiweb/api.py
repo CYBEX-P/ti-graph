@@ -5,6 +5,7 @@ from py2neo import Graph, Node
 import requests
 import json
 import os
+import pandas as pd
 
 from tiweb import app, YAMLConfig
 from gip import geoip, ASN, geoip_insert, asn_insert
@@ -142,7 +143,12 @@ def getEventName():
 def startFileEvent():
     #os.environ['eventName'] = request.form['eventName']
     #load csv/json file from request.files['fileNameHere]
+    fileCSVDF = pd.read_csv(request.files['file'])
+    print(fileCSVDF)
+    # with open('fileCSV', 'r') as f:
+    #     print(f.read())
+
     # parse all node types and data
     # insert all nodes
     # return status
-    return jsonify(request.files)
+    return jsonify(0)
