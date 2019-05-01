@@ -46,9 +46,9 @@ class User(db.Model, UserMixin):
 class DatabaseManagement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     port = db.Column(db.Integer)
-    ip = db.Column(db.String)
-    dockerid = db.Column(db.String)
-    status = db.Column(db.String)
+    ip = db.Column(db.String(15))
+    dockerid = db.Column(db.String(15))
+    status = db.Column(db.String(20))
 
 
 # Setup Flask-Security

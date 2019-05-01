@@ -1,6 +1,6 @@
 {
   "python.linting.enabled": true,
-  "python.pythonPath": "venv/bin/python",
+  "python.pythonPath": "/usr/bin/python3",
   "python.linting.flake8Enabled": false,
   "python.linting.flake8Args": ["--config=.flake8rc"],
   "editor.formatOnSave": false,
