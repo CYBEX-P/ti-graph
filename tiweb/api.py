@@ -37,6 +37,7 @@ from cybex import insertCybex
 #from flask.ext.sqlalchemy import SQLAlchemy
 
 from connect import graph
+from containerlib import client
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://cybexpadmin:O4LZcK9pIMF3x0PFGqeKvdH3krhknwpF@134.197.21.10:3306/cybexpui'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -59,11 +60,19 @@ class User(UserMixin, db.Model):
     first_name  = db.Column(db.String(15))
     last_name = db.Column(db.String(15))
     email = db.Column(db.String(50), unique = True)
-    db_ip = db.Column(db.String(16))
+    db_ip = db.Column(db.String(50))
     db_port = db.Column(db.Integer)
     username = db.Column(db.String(15), unique = True)
     password = db.Column(db.String(80))
     admin = db.Column(db.Boolean)
+
+ClusterIP = "moose.soc.unr.edu"
+bearer = "Bearer token-h88mk:snmxx9hxdqgg9gpk7blrrhxz899rb9k884tc74dllb28m628srxtfq"
+urlBase = "https://squirrel.soc.unr.edu/v3/"
+clusterid = "c-sxgk4"
+projectid = "c-sxgk4:p-ffbv9"
+clusterIP = "134.197.7.5"
+
 
 #db.create_all()
 
@@ -96,12 +105,31 @@ def register():
 		'first_name' : form.first_name.data,
 		'last_name' : form.last_name.data,
 		'email' : form.email.data,
-		'password' : form.password.data,
+		'password' : form.password.data
 		
 	}
-    return jsonify({'result' : result})
+        c = client(bearer, urlBase, projectid, clusterid, None, ClusterIP)
+        r = c.add_database()
+        if(r and r["status"]):
+            print("Created Database: " + r["data"]["id"])
+        else:
+            print("Error: " + r["error"])
+        r = c.get_database_info()
+        if(r and r["status"]):
+            #print(json.dumps(r['data']))
+           user = User.query.filter_by(username=form.username.data).first()
+           user.db_ip = r['data']['ip']
+           user.db_port = r['data']['port']
+           db.session.commit() 
+        return jsonify({'result' : result})
+        
+    else:
+        result = jsonify({"error":"enter all the values"})
+        return result
 
-@app.route('/login', methods =['GET','POST'])
+    
+
+@app.route('/users/login', methods =['GET','POST'])
 def login():
     form = LoginForm()
     result = ''
@@ -109,13 +137,32 @@ def login():
     if form.validate_on_submit():
         user= User.query.filter_by(username = form.username.data).first()                                
         if user:
-                if check_password_hash(user.password, form.password.data):
+            if check_password_hash(user.password, form.password.data):
+                access_token = create_access_token(identity = {'username': form.username.data})
+                result = access_token
+                if(user.db_ip is None or user.db_port is None):
+                    c = client(bearer, urlBase, projectid, clusterid, None, ClusterIP)
+                    r = c.add_database()
+                    if(r and r["status"]):
+                        print("Created Database: " + r["data"]["id"])
+                    else:
+                        print("Error: " + r["error"])
+                        r = c.get_database_info()
+                        if(r and r["status"]):
+                            user = User.query.filter_by(username=form.username.data).first()
+                            user.db_ip = r['data']['ip']
+                            user.db_port = r['data']['port']
+                            db.session.commit() 
+                    return result
+                            
+                else:
                     access_token = create_access_token(identity = {'username': form.username.data})
                     result = access_token
-                else:
-                    result = jsonify({"error":"Invalid username and password"})
-    
-                return result
+                    return result
+
+        else:
+            result = jsonify({"error":"Invalid username and password"})
+            return result
 	
 @app.route('/remove', methods = ['POST', 'GET'])
 def delete():
