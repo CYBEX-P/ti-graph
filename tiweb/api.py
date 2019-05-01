@@ -28,7 +28,6 @@ from werkzeug.datastructures import Headers
 import uuid
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
-
 from tiweb import app, YAMLConfig
 from gip import geoip, ASN, geoip_insert, asn_insert
 from wipe_db import wipeDB
@@ -321,14 +320,19 @@ def getEventName():
 
 @app.route('/event/start/file', methods=['POST'])
 def startFileEvent():
-    #os.environ['eventName'] = request.form['eventName']
+    os.environ['eventName'] = request.form['eventName']
+
     #load csv/json file from request.files['fileNameHere]
     fileCSVDF = pd.read_csv(request.files['file'])
-    print(fileCSVDF)
-    # with open('fileCSV', 'r') as f:
-    #     print(f.read())
-
+    
     # parse all node types and data
     # insert all nodes
+    for i in range(len(fileCSVDF)):
+        Ntype = fileCSVDF.iloc[i, 0]
+        Nval = fileCSVDF.iloc[i, 1]
+        Ntime = fileCSVDF.iloc[i, 2]
+
+        status = insert(Ntype, Nval)
+
     # return status
     return jsonify(0)
