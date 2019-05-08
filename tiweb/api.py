@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, jsonify, flash, make_response
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
-from flask import jsonify
+from flask import jsonify, request
 from py2neo import Graph, Node
 import requests
 import json
+import os
+import pandas as pd
 
 from flask_jwt_extended import JWTManager
 from flask_wtf import FlaskForm
@@ -25,7 +27,6 @@ from flask_cors import CORS
 from werkzeug.datastructures import Headers
 import uuid
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-
 
 from tiweb import app, YAMLConfig
 from gip import geoip, ASN, geoip_insert, asn_insert
@@ -196,7 +197,6 @@ def found():
 
 
 
-
 @app.route('/secure')
 @login_required
 def home():
@@ -279,10 +279,10 @@ def enrich(enrich_type, ip):
 @app.route('/enrich/all')
 def enrich_all():
     for node in graph.nodes.match("IP"):
-        enrich('asn', node['IP'])
-        enrich('gip', node['IP'])
-        enrich('whois', node['IP'])
-        enrich('hostname', node['IP'])
+        enrich('asn', node['data'])
+        enrich('gip', node['data'])
+        enrich('whois', node['data'])
+        enrich('hostname', node['data'])
     return jsonify({"Status" : "Success"})
 
 @app.route('/details/<id>')
@@ -292,9 +292,47 @@ def show_details(id):
 
 @app.route('/admin/ratelimit')
 def ratelimit():
+    # needs to use YAMLConfig
     res = requests.get('https://user.whoisxmlapi.com/service/account-balance?apiKey=at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz')
     return jsonify(res.json())
 
 @app.route('/admin/config')
 def sendConfig():
     return jsonify(YAMLConfig)
+
+@app.route('/event/start', methods=['POST'])
+def startEvent():
+    res = request.get_json()
+    os.environ['eventName'] = res['eventName']
+    # insert all nodes
+    dType1 = res['IOCType1']
+    dType2 = res['IOCType2']
+    dType3 = res['IOCType3']
+    status = insert(dType1, res['dataToInsert1'])
+    status2 = insert(dType2, res['dataToInsert2'])
+    status2 = insert(dType3, res['dataToInsert3'])
+    # return status
+    return status
+
+@app.route('/event/getName', methods=['GET'])
+def getEventName():
+    return jsonify(os.environ['eventName'])
+
+@app.route('/event/start/file', methods=['POST'])
+def startFileEvent():
+    os.environ['eventName'] = request.form['eventName']
+
+    #load csv/json file from request.files['fileNameHere]
+    fileCSVDF = pd.read_csv(request.files['file'])
+    
+    # parse all node types and data
+    # insert all nodes
+    for i in range(len(fileCSVDF)):
+        Ntype = fileCSVDF.iloc[i, 0]
+        Nval = fileCSVDF.iloc[i, 1]
+        Ntime = fileCSVDF.iloc[i, 2]
+
+        status = insert(Ntype, Nval)
+
+    # return status
+    return jsonify(0)

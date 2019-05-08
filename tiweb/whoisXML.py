@@ -30,8 +30,8 @@ def insertWhois(data, graph):
 
     if(data != 0):
             c = Node("Whois", data = data["WhoisRecord"]["registryData"]["registrant"]["organization"])
-            ip_node = graph.nodes.match("IP", IP=data["WhoisRecord"]["domainName"]).first()
-            c_node = graph.nodes.match("Whois", data["WhoisRecord"]["registryData"]["registrant"]["organization"]).first()
+            ip_node = graph.nodes.match("IP", data=data["WhoisRecord"]["domainName"]).first()
+            c_node = graph.nodes.match("Whois", data = data["WhoisRecord"]["registryData"]["registrant"]["organization"]).first()
 
             if(c_node):
                     rel = Relationship(ip_node, "HAS_WHOIS", c_node)
@@ -44,5 +44,5 @@ def insertWhois(data, graph):
                     print("New whois node created and linked")
             return 1
     else:
-            print("No whois Entry for {}".format(data["WhoisRecord"]["domainName"]))
+            print("No whois Entry")
             return 0

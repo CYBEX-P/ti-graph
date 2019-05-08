@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 import yaml
+import os
 
 app = Flask(__name__, static_folder='static', template_folder='static')
 app.config['DEBUG'] = True
@@ -11,6 +12,8 @@ app.config['SECURITY_PASSWORD_HASH'] = 'sha512_crypt'
 app.config['SECURITY_PASSWORD_SALT'] = 'asfdkjasdf32cxvewfsda'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['ENV'] = 'development'
+
+os.environ['eventName'] = "Temp Event"
 
 # Create database connection object
 db = SQLAlchemy(app)
