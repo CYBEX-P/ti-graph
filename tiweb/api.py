@@ -40,11 +40,13 @@ from cybex import insertCybex
 from connect import graph
 from containerlib import client
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://cybexpadmin:O4LZcK9pIMF3x0PFGqeKvdH3krhknwpF@134.197.21.10:3306/cybexpui'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PROPAGATE_EXCEPTIONS'] = True
-app.config['JWT_SECRET_KEY'] = 'secret'
-app.config['WTF_CSRF_ENABLED'] = False
+
+### These are commented out because they should be set by config.py
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://cybexpadmin:O4LZcK9pIMF3x0PFGqeKvdH3krhknwpF@134.197.21.10:3306/cybexpui'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['PROPAGATE_EXCEPTIONS'] = True
+# app.config['JWT_SECRET_KEY'] = 'secret'
+# app.config['WTF_CSRF_ENABLED'] = False
 
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
