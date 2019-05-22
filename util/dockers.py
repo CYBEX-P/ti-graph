@@ -7,25 +7,26 @@ import string
 import random
 
 def pw_gen(size = 8, chars=string.ascii_letters + string.digits):
-	return ''.join(random.choice(chars) for _ in range(size))
+#	return ''.join(random.choice(chars) for _ in range(size))
+	return 'wolfpack'
 
 def killall(client):
     for container in client.containers.list():
         container.kill()
 
 def find_free_ports():
-    bolt = 0
-    http = 0
+    bolt = 7687 
+    http = 7474 
     #find first free port for bolt listener
-    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
-        s.bind(('', 0))
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        bolt = s.getsockname()[1]
-        #find second free port for http listener while bolt listener is still up
-        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as x:
-            x.bind(('', 0))
-            x.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            http = x.getsockname()[1]
+#    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+#        s.bind(('', 0))
+#        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+#       bolt = s.getsockname()[1]
+#        #find second free port for http listener while bolt listener is still up
+#        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as x:
+#            x.bind(('', 0))
+#            x.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+#            http = x.getsockname()[1]
     return bolt,http
 
 def list_db(client):
