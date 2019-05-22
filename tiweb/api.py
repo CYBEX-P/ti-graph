@@ -206,7 +206,7 @@ def home():
 @app.route('/api')
 def api():
     foo = {"bar": 'test'}
-    return jsonify(foo)
+    return jsonify(app.config['TEST'])
 
 
 @app.route('/neo4j/export')

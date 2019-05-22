@@ -73,3 +73,6 @@ with open('../config.yaml','r') as f:
     conf = yaml.load(f)
 
 YAMLConfig = conf['IOC']
+
+if app.config['ENV'] == 'development':
+    app.config.from_object('config.DevConfig')
