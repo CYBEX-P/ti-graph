@@ -17,6 +17,8 @@ class ProdConfig(DefaultConfig):
     CONTAINER_TOKEN = "somecontainertoken"
     PROPOGATE_EXCCEPTIONS = False
 
+    TEST = 'test_prod_string'
+
 
 class DevConfig(DefaultConfig):
     DEBUG = True
@@ -28,7 +30,7 @@ class DevConfig(DefaultConfig):
     BOLT_AUTH_USER = 'neo4j'
     BOLT_AUTH_P = 'KLZPXA9k9uv5654'
     
-    TEST = 'test_conf_string'
+    TEST = 'test_dev_string'
 
 
 def session_init(username):

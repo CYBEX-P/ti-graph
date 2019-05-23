@@ -74,5 +74,7 @@ with open('../config.yaml','r') as f:
 
 YAMLConfig = conf['IOC']
 
-if app.config['ENV'] == 'development':
+if app.config['ENV'] == 'production':
+    app.config.from_object('config.ProdConfig')
+else:
     app.config.from_object('config.DevConfig')

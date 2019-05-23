@@ -207,7 +207,6 @@ def home():
 
 @app.route('/api')
 def api():
-    foo = {"bar": 'test'}
     return jsonify(app.config['TEST'])
 
 
