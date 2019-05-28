@@ -34,7 +34,7 @@ from runner import full_load, insertNode, insertHostname
 from whoisXML import whois, insertWhois
 from exportDB import export, processExport
 from cybex import insertCybex
-#from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 from connect import graph
 from containerlib import client
@@ -85,7 +85,7 @@ class RegistrationForm(FlaskForm):
     #db_ip = StringField('db_ip', validators = [InputRequired(), IPAddress(ipv4 = True, ipv6 = False, message = 'Enter valid db_ip address')])
     #db_port = IntegerField('db_port', validators = [InputRequired()])
     username = StringField('username', validators = [InputRequired(), length(min = 4, max = 15)])
-    password = PasswordField('password', validators = [InputRequired(), length(min = 8,max = 80)])
+    password = PasswordField('password', validators = [InputRequired(), length(min = 4,max = 80)])
     admin = BooleanField('admin')
     
 class LoginForm(FlaskForm):
@@ -131,7 +131,7 @@ def register():
 
     
 
-@app.route('/users/login', methods =['GET','POST'])
+@app.route('/users/login', methods =['POST'])
 def login():
     form = LoginForm()
     result = ''
@@ -165,8 +165,10 @@ def login():
         else:
             result = jsonify({"error":"Invalid username and password"})
             return result
+    else:
+        return jsonify({"Error" : "Invalid form"})
 	
-@app.route('/remove', methods = ['POST', 'GET'])
+@app.route('/remove', methods = ['POST'])
 def delete():
     #form = DeleteForm()
     #if form.validate_on_submit():
@@ -175,7 +177,7 @@ def delete():
     result = jsonify({"message": "User deleted"})
     return result 
 
-@app.route('/update', methods = ['POST', 'GET'])
+@app.route('/update', methods = ['POST'])
 def update():
         #options = session.query(User)
         update_this = User.query.filter_by(username = request.get_json()['username']).first()
@@ -186,7 +188,7 @@ def update():
         result = jsonify({'message': 'DB updated'})
         return result 
 
-@app.route('/find', methods = ['POST', 'GET'])
+@app.route('/find', methods = ['POST'])
 def found():
     found_user= User.query.filter_by(username = request.get_json()['username']).first_or_404()
     found_f = found_user.first_name
