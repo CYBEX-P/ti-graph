@@ -5,13 +5,11 @@ import yaml
 import os
 
 app = Flask(__name__, static_folder='static', template_folder='static')
-app.config['DEBUG'] = True
-app.config['SECRET_KEY'] = 'notsosecret'
+# app.config['DEBUG'] = True
+# app.config['SECRET_KEY'] = 'notsosecret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tiweb.db'
-app.config['SECURITY_PASSWORD_HASH'] = 'sha512_crypt'
-app.config['SECURITY_PASSWORD_SALT'] = 'asfdkjasdf32cxvewfsda'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['ENV'] = 'development'
+# app.config['ENV'] = 'development'
 
 os.environ['eventName'] = "Temp Event"
 
@@ -74,7 +72,8 @@ with open('../config.yaml','r') as f:
 
 YAMLConfig = conf['IOC']
 
-if app.config['ENV'] == 'production':
-    app.config.from_object('config.ProdConfig')
-else:
+if app.config['ENV'] == 'development':
     app.config.from_object('config.DevConfig')
+
+else:
+    app.config.from_object('config.ProdConfig')

@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request, jsonify, flash, make_response
+from flask import Flask, render_template, request, jsonify, flash, make_response, session
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
-from flask import jsonify, request
 from py2neo import Graph, Node
 import requests
 import json
@@ -210,24 +209,24 @@ def api():
     return jsonify(app.config['TEST'])
 
 
-@app.route('/neo4j/export')
+@app.route('/api/v1/neo4j/export')
 def exportNeoDB():
     return jsonify(processExport(export(graph)))
 
 
-@app.route('/neo4j/load')
-def load_function():
-    full_load()
-    return "Neo4j DB loaded!"
+# @app.route('/neo4j/load')
+# def load_function():
+#     full_load()
+#     return "Neo4j DB loaded!"
 
 
-@app.route('/neo4j/wipe')
+@app.route('/api/v1/neo4j/wipe')
 def wipe_function():
     wipeDB(graph)
     return jsonify({"Status":"Neo4j DB full wipe complete!"})
 
 
-@app.route('/neo4j/insert/<Ntype>/<data>')
+@app.route('/api/v1/neo4j/insert/<Ntype>/<data>')
 def insert(Ntype, data):
     status = insertNode(Ntype, data, graph)
     if status == 1:
@@ -236,7 +235,7 @@ def insert(Ntype, data):
         return jsonify({"Status" : "Failed"})
 
 
-@app.route('/enrich/<enrich_type>/<ip>')
+@app.route('/api/v1/enrich/<enrich_type>/<ip>')
 def enrich(enrich_type, ip):
     if(enrich_type == "asn"):
             a_results = ASN(ip)
@@ -277,7 +276,7 @@ def enrich(enrich_type, ip):
         return "Invalid enrichment type. Try 'asn', 'gip', 'whois', or 'hostname'."
 
 
-@app.route('/enrich/all')
+@app.route('/api/v1/enrich/all')
 def enrich_all():
     for node in graph.nodes.match("IP"):
         enrich('asn', node['data'])
@@ -286,22 +285,22 @@ def enrich_all():
         enrich('hostname', node['data'])
     return jsonify({"Status" : "Success"})
 
-@app.route('/details/<id>')
-def show_details(id):
-    node = graph.nodes.get(int(id))
-    return jsonify(node)
+# @app.route('/details/<id>')
+# def show_details(id):
+#     node = graph.nodes.get(int(id))
+#     return jsonify(node)
 
-@app.route('/admin/ratelimit')
-def ratelimit():
-    # needs to use YAMLConfig
-    res = requests.get('https://user.whoisxmlapi.com/service/account-balance?apiKey=at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz')
-    return jsonify(res.json())
+# @app.route('/admin/ratelimit')
+# def ratelimit():
+#     # needs to use YAMLConfig
+#     res = requests.get('https://user.whoisxmlapi.com/service/account-balance?apiKey=at_dE3c8tVnBieCdGwtzUiOFFGfuCQoz')
+#     return jsonify(res.json())
 
-@app.route('/admin/config')
+@app.route('/api/v1/admin/config')
 def sendConfig():
     return jsonify(YAMLConfig)
 
-@app.route('/event/start', methods=['POST'])
+@app.route('/api/v1/event/start', methods=['POST'])
 def startEvent():
     res = request.get_json()
     os.environ['eventName'] = res['eventName']
@@ -315,11 +314,11 @@ def startEvent():
     # return status
     return status
 
-@app.route('/event/getName', methods=['GET'])
-def getEventName():
-    return jsonify(os.environ['eventName'])
+# @app.route('/event/getName', methods=['GET'])
+# def getEventName():
+#     return jsonify(os.environ['eventName'])
 
-@app.route('/event/start/file', methods=['POST'])
+@app.route('/api/v1/event/start/file', methods=['POST'])
 def startFileEvent():
     os.environ['eventName'] = request.form['eventName']
 
@@ -337,3 +336,17 @@ def startFileEvent():
 
     # return status
     return jsonify(0)
+
+@app.route('/api/v1/session/init', methods=['POST'])
+def sess_init():
+    req = request.get_json()
+    username = req['user']
+
+    session['username'] = username
+    # get the following from sql db (user info)
+    session['uid'] = None
+    session['neoURL'] = None
+    session['neoPass'] = None
+    session['neoPort'] = None
+
+    return "User {} has initialized a session.".format(session['username'])

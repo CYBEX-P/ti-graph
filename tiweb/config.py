@@ -1,5 +1,3 @@
-from flask import session
-
 class DefaultConfig(object):
     DEBUG = False
     TESTING = False
@@ -11,6 +9,10 @@ class DefaultConfig(object):
     CONTAINER_URLBASE = "https://squirrel.soc.unr.edu/v3/"
     CONTAINER_CLUSTERID = "c-sxgk4"
     CONTAINER_PROJECTID = "c-sxgk4:p-ffbv9"
+    SECURITY_PASSWORD_HASH = 'sha512_crypt'
+    SECURITY_PASSWORD_SALT = 'asfdkjasdf32cxvewfsda'
+    
+    SECRET_KEY = 'session secret key'
 
 class ProdConfig(DefaultConfig):
     JWT_SECRET_KEY = "notsosecret"
@@ -31,12 +33,3 @@ class DevConfig(DefaultConfig):
     BOLT_AUTH_P = 'KLZPXA9k9uv5654'
     
     TEST = 'test_dev_string'
-
-
-def session_init(username):
-    session['username'] = username
-    # get the following from sql db (user info)
-    session['uid'] = 1
-    session['neoURL'] = 1
-    session['neoPass'] = 1
-    session['neoPort'] = 1 
